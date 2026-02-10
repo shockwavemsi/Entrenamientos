@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\CiclistaController;
+use App\Http\Controllers\BloqueEntrenamientoController;
 
 Route::get('/', function () {
   $visited = DB::select('select * from places where visited = ?', [1]); 
@@ -16,9 +17,13 @@ Route::post('logout', [CiclistaController::class, 'logout'])->name('logout');
 
 // Dashboard (protegido)
 Route::get('/bienvenida', [CiclistaController::class, 'showBienvenida'])->middleware('auth');
-Route::get('/ciclista', [CiclistaController::class, 'linkCiclista'])->middleware('auth');
 
 Route::get('register', [CiclistaController::class, 'registerForm'])->name('register');
 
 // Procesar registro
 Route::post('register', [CiclistaController::class, 'register']);
+
+Route::get('/api/bloques', [BloqueEntrenamientoController::class, 'index']);
+Route::get('/bloques', function () {
+    return view('menu.bloqueEntrenamiento');
+});

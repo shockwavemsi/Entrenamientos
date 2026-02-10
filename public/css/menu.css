@@ -1,0 +1,88 @@
+/* ======== ESTILOS GENERALES ======== */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* ======== TÍTULO ======== */
+h1 {
+    text-align: center;
+    color: #333;
+    margin: 20px 0;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* ======== MENÚ SUPERIOR ======== */
+#menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: #007bff;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 12px 0;
+}
+
+/* Elementos principales */
+#menu > li {
+    position: relative;
+}
+
+/* Enlaces principales */
+#menu > li > a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    display: block;
+    transition: background 0.2s;
+    border-radius: 4px;
+}
+
+#menu > li > a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Submenú */
+.submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: white;
+    position: absolute;
+    top: 100%; /* Se pega justo debajo del elemento padre */
+    left: 0;
+    min-width: 180px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: none;
+    z-index: 1000;
+}
+
+/* Mostrar submenú al pasar el ratón */
+#menu > li:hover .submenu {
+    display: block;
+}
+
+
+/* ======== BOTÓN DE LOGOUT ======== */
+form button {
+    display: block;
+    margin: 30px auto;
+    padding: 10px 20px;
+    background: #dc3545;
+    border: none;
+    color: white;
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+form button:hover {
+    background: #b52a37;
+}

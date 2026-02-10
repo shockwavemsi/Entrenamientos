@@ -1,42 +1,51 @@
 <?php
-namespace App\Http\Controllers; // importante para que extienda de ahi
+
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Ciclista;
 
 class CiclistaController extends Controller
 {
+    // Mostrar formulario de login
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    public function login(Request $request) // el request es lo que envia el usuario, es un objeto
+    // Procesar login
+    public function login(Request $request)
     {
-        $ciclista = Ciclista::where('email', $request->email)->first(); // se convierte en un objeto con los datos de la consulta
+        // Buscar ciclista por email
+        $ciclista = Ciclista::where('email', $request->email)->first();
 
-        if ($ciclista && $ciclista->password === $request->password) {
+        // Verificar contraseña
+        if ($ciclista && Hash::check($request->password, $ciclista->password)) {
             Auth::login($ciclista);
-            return view('/bienvenida');
+
+            // IMPORTANTE: redirigir, NO return view()
+            return redirect('/bienvenida');
         }
 
         return back()->with('error', 'Correo o contraseña incorrectos');
     }
 
-
+    // Logout
     public function logout()
     {
         Auth::logout();
-        return redirect('/login'); // son funciones del auth del modelo, investigarlo?
+        return redirect('/login');
     }
 
+    // Vista protegida del dashboard
     public function showBienvenida()
     {
         return view('bienvenida');
     }
 
-    // Mostrar formulario
+    // Mostrar formulario de registro
     public function registerForm()
     {
         return view('auth.register');
@@ -45,37 +54,27 @@ class CiclistaController extends Controller
     // Procesar registro
     public function register(Request $request)
     {
-        // Validar datos
         $request->validate([
             'nombre' => 'required|string|max:80',
             'apellidos' => 'required|string|max:80',
             'email' => 'required|email|unique:ciclista,email',
-            'password' => 'required|string|min:4|confirmed', // confirmed para password_confirmation
+            'password' => 'required|string|min:4|confirmed',
             'fecha_nacimiento' => 'required|date',
             'peso_base' => 'required|numeric',
             'altura_base' => 'required|integer',
         ]);
 
-        // Crear ciclista
+        // Crear ciclista con contraseña encriptada
         Ciclista::create([
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
             'email' => $request->email,
-            'password' => $request->password, // ¿hash?
+            'password' => Hash::make($request->password),
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'peso_base' => $request->peso_base,
             'altura_base' => $request->altura_base,
         ]);
 
-        // Redirigir a login
         return redirect('/login')->with('success', 'Cuenta creada correctamente. ¡Puedes iniciar sesión!');
-    }
-
-    public function showPerfil(){
-        return view('menu.perfil');
-    }
-
-    public function showBloques(){
-        return view('menu.bloques');
     }
 }

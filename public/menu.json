@@ -1,0 +1,51 @@
+[
+    {
+        "name": "Ciclista",
+        "url": "/ciclista",
+        "children": []
+    },
+    {
+        "name": "Bloques de Entrenamiento",
+        "url": "/bloques",
+        "children": [
+            { "name": "Listar Bloques", "url": "/bloques" },
+            { "name": "Crear Bloque", "url": "/bloques/crear" }
+        ]
+    },
+    {
+        "name": "Sesiones de Bloques",
+        "url": "/sesionbloque",
+        "children": [
+            { "name": "Listar Sesiones de Bloques", "url": "/sesionbloque" },
+            { "name": "Crear Sesión de Bloque", "url": "/sesionbloque/crear" }
+        ]
+    },
+    {
+        "name": "Sesiones de Entrenamiento",
+        "url": "/sesion",
+        "children": [
+            { "name": "Listar Sesiones", "url": "/sesion" },
+            { "name": "Crear Sesión", "url": "/sesion/crear" }
+        ]
+    },
+    {
+        "name": "Planes de Entrenamiento",
+        "url": "/plan",
+        "children": [
+            { "name": "Listar Planes", "url": "/plan" },
+            { "name": "Crear Plan", "url": "/plan/crear" }
+        ]
+    },
+    {
+        "name": "Resultados",
+        "url": "/resultado",
+        "children": [
+            { "name": "Registrar Resultado", "url": "/resultado/crear" }
+        ]
+    },
+    {
+        "name": "Ajustes",
+        "url": "/ajustes",
+        "children": []
+    }
+]
