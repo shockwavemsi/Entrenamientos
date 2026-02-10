@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
 </head>
 <body>
-{{-- <h1>Bienvenido {{ Auth::user()->nombre }}</h1> --}}
+<h1>Bienvenido {{ Auth::user()->nombre }}</h1>
 
 <ul id="menu"></ul>
 

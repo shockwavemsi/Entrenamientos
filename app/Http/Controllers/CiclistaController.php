@@ -18,7 +18,7 @@ class CiclistaController extends Controller
 
         if ($ciclista && $ciclista->password === $request->password) {
             Auth::login($ciclista);
-            return redirect('/bienvenida');
+            return view('/bienvenida');
         }
 
         return back()->with('error', 'Correo o contraseña incorrectos');
@@ -33,7 +33,7 @@ class CiclistaController extends Controller
 
     public function showBienvenida()
     {
-        return view('/bienvenida');
+        return view('bienvenida');
     }
 
     // Mostrar formulario
