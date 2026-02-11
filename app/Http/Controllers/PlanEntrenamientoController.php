@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BloqueEntrenamiento;
+use App\Models\PlanEntrenamiento;
 use Illuminate\Http\Request;
 
-class BloqueEntrenamientoController extends Controller
+class PlanEntrenamientoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * API: devolver planes en JSON
      */
     public function index()
     {
-        // Obtener todos los bloques
-        $bloques = BloqueEntrenamiento::all();
+        $planes = PlanEntrenamiento::all();
+        return response()->json($planes);
+    }
 
-        // Devolver JSON
-        return response()->json($bloques);
+    /**
+     * Vista HTML que mostrará los planes
+     */
+    public function mostrarPlanes()
+    {
+        return view('menu.planEntrenamiento');
     }
 
     public function create() {}
@@ -26,3 +31,4 @@ class BloqueEntrenamientoController extends Controller
     public function update(Request $request, string $id) {}
     public function destroy(string $id) {}
 }
+

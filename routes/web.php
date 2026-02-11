@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\CiclistaController;
 use App\Http\Controllers\BloqueEntrenamientoController;
+use App\Http\Controllers\SesionEntrenamientoController;
+use App\Http\Controllers\PlanEntrenamientoController;
+
 
 Route::get('/', function () {
   $visited = DB::select('select * from places where visited = ?', [1]); 
@@ -24,6 +27,24 @@ Route::get('register', [CiclistaController::class, 'registerForm'])->name('regis
 Route::post('register', [CiclistaController::class, 'register']);
 
 Route::get('/api/bloques', [BloqueEntrenamientoController::class, 'index']);
-Route::get('/bloques', function () {
-    return view('menu.bloqueEntrenamiento');
-});
+Route::get('/bloques', [BloqueEntrenamientoController::class, 'mostrarBloques'])->middleware('auth');
+
+// Procesar Sesiones Entrenamientos
+Route::get('/api/sesiones', [SesionEntrenamientoController::class, 'index']);
+Route::get('/sesion', [SesionEntrenamientoController::class, 'mostrarSesiones'])->middleware('auth');
+
+// Procesar Plan Entrenamientos
+Route::get('/api/planes', [PlanEntrenamientoController::class, 'index']); Route::get('/plan', [PlanEntrenamientoController::class, 'mostrarPlanes'])->middleware('auth');
+
+// Procesa Sesion Bloque
+use App\Http\Controllers\SesionBloqueController;
+
+Route::get('/api/sesion-bloque', [SesionBloqueController::class, 'index']);
+Route::get('/sesionbloque', [SesionBloqueController::class, 'mostrarSesionBloque'])->middleware('auth');
+Route::get('/sesiones/{id}/bloques', [SesionEntrenamientoController::class, 'bloquesDeSesion']);
+
+
+Route::get('/sesion-bloques', [SesionEntrenamientoController::class, 'sesionesConBloques']);
+
+
+
