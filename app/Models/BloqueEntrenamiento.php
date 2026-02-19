@@ -16,7 +16,6 @@ class BloqueEntrenamiento extends Model
         'duracion_estimada',
         'potencia_pct_min',
         'potencia_pct_max',
-        'pulso_pct_max',
         'pulso_reserva_pct',
         'comentario'
     ];
@@ -31,4 +30,3 @@ class BloqueEntrenamiento extends Model
         )->withPivot('orden', 'repeticiones');
     }
 }
-

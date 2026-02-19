@@ -11,10 +11,13 @@ class PlanEntrenamientoController extends Controller
      * API: devolver planes en JSON
      */
     public function index()
-    {
-        $planes = PlanEntrenamiento::all();
-        return response()->json($planes);
-    }
+{
+    $userId = auth()->id(); // ID del ciclista autenticado
+
+    $planes = PlanEntrenamiento::where('id_ciclista', $userId)->get();
+
+    return response()->json($planes);
+}
 
     /**
      * Vista HTML que mostrará los planes

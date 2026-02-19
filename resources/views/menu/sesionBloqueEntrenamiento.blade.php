@@ -2,60 +2,283 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sesiones y Bloques</title>
+    <title>Sesiones con Bloques</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .btn-crear {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .sesion-card {
+            background: white;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .sesion-titulo {
+            color: #007bff;
+            margin-top: 0;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .sesion-fecha {
+            color: #666;
+            font-style: italic;
+            margin: 5px 0 15px 0;
+        }
+        .bloques-subtitulo {
+            color: #333;
+            margin: 15px 0 10px 0;
+        }
+        .bloque-item {
+            background: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 0 5px 5px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .bloque-info {
+            flex: 1;
+        }
+        .bloque-nombre {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+        .bloque-detalles {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .bloque-detalles span {
+            margin-right: 15px;
+        }
+        .btn-eliminar-sesion {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+        }
+        .btn-eliminar-bloque {
+            background: #ffc107;
+            color: #333;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .btn-eliminar-bloque:hover {
+            background: #e0a800;
+        }
+        .sin-bloques {
+            color: #999;
+            font-style: italic;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+        .error {
+            color: #dc3545;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Sesiones de Entrenamiento</h1>
+<h1>Sesiones con Bloques</h1>
+<a href="/sesionbloque/crear" class="btn-crear">+ Crear Nueva Sesión</a>
 
-<div id="sesiones"></div>
+<div id="sesiones" class="loading">Cargando sesiones...</div>
 
 <script>
-fetch('/sesion-bloques')
-    .then(response => response.json())
+fetch('/api/sesiones-con-bloques')
+    .then(res => {
+        if (!res.ok) throw new Error('Error al cargar las sesiones');
+        return res.json();
+    })
     .then(data => {
-        const contenedor = document.getElementById('sesiones');
+        const contenedor = document.getElementById("sesiones");
+        contenedor.innerHTML = ''; // Limpiar mensaje de carga
+
+        if (data.length === 0) {
+            contenedor.innerHTML = '<p style="text-align: center; color: #666;">No hay sesiones con bloques.</p>';
+            return;
+        }
 
         data.forEach(sesion => {
-            // Tarjeta de la sesión
-            const cardSesion = document.createElement('div');
-            cardSesion.style.border = "1px solid #ccc";
-            cardSesion.style.padding = "10px";
-            cardSesion.style.margin = "15px 0";
+            const card = document.createElement("div");
+            card.className = "sesion-card";
 
-            const tituloSesion = document.createElement('h2');
-            tituloSesion.textContent = sesion.nombre;
-            cardSesion.appendChild(tituloSesion);
+            // Título de la sesión
+            const titulo = document.createElement("h2");
+            titulo.className = "sesion-titulo";
+            titulo.textContent = sesion.nombre;
+            card.appendChild(titulo);
 
-            const descripcion = document.createElement('p');
-            descripcion.textContent = "Descripción: " + sesion.descripcion;
-            cardSesion.appendChild(descripcion);
+            // Fecha (si existe)
+            if (sesion.fecha) {
+                const fecha = document.createElement("p");
+                fecha.className = "sesion-fecha";
+                fecha.textContent = "📅 " + sesion.fecha;
+                card.appendChild(fecha);
+            }
 
-            const fecha = document.createElement('p');
-            fecha.textContent = "Fecha: " + sesion.fecha;
-            cardSesion.appendChild(fecha);
+            // Subtítulo de bloques
+            const subtitulo = document.createElement("h3");
+            subtitulo.className = "bloques-subtitulo";
+            subtitulo.textContent = "Bloques asignados:";
+            card.appendChild(subtitulo);
 
-            const hr = document.createElement('hr');
-            cardSesion.appendChild(hr);
+            // Bloques
+            if (sesion.bloques && sesion.bloques.length > 0) {
+                sesion.bloques.forEach(bloque => {
+                    const bloqueDiv = document.createElement("div");
+                    bloqueDiv.className = "bloque-item";
 
-            // Lista de bloques
-            sesion.bloques
-                .sort((a, b) => a.pivot.orden - b.pivot.orden)
-                .forEach(bloque => {
+                    const infoDiv = document.createElement("div");
+                    infoDiv.className = "bloque-info";
 
-                const bloqueItem = document.createElement('p');
-                bloqueItem.innerHTML = `
-                    <strong>${bloque.pivot.orden}.</strong> 
-                    ${bloque.nombre} 
-                    (${bloque.pivot.repeticiones} repeticiones)
-                `;
-                cardSesion.appendChild(bloqueItem);
+                    const nombre = document.createElement("div");
+                    nombre.className = "bloque-nombre";
+                    nombre.textContent = bloque.nombre;
+                    infoDiv.appendChild(nombre);
+
+                    const detalles = document.createElement("div");
+                    detalles.className = "bloque-detalles";
+                    detalles.innerHTML = `
+                        <span>🔄 Repeticiones: ${bloque.pivot.repeticiones}</span>
+                        <span>📍 Orden: ${bloque.pivot.orden}</span>
+                        <span>📊 Tipo: ${bloque.tipo || 'No especificado'}</span>
+                    `;
+                    infoDiv.appendChild(detalles);
+
+                    bloqueDiv.appendChild(infoDiv);
+
+                    // Botón eliminar bloque individual
+                    const btnEliminarBloque = document.createElement("button");
+                    btnEliminarBloque.className = "btn-eliminar-bloque";
+                    btnEliminarBloque.textContent = "Eliminar";
+                    btnEliminarBloque.onclick = (e) => {
+                        e.stopPropagation();
+                        eliminarBloqueIndividual(bloque.pivot.id, bloqueDiv);
+                    };
+
+                    bloqueDiv.appendChild(btnEliminarBloque);
+                    card.appendChild(bloqueDiv);
+                });
+            } else {
+                const sinBloques = document.createElement("p");
+                sinBloques.className = "sin-bloques";
+                sinBloques.textContent = "Esta sesión no tiene bloques asignados.";
+                card.appendChild(sinBloques);
+            }
+
+            // Botón eliminar TODA la sesión (solo relaciones)
+            const btnEliminarSesion = document.createElement("button");
+            btnEliminarSesion.className = "btn-eliminar-sesion";
+            btnEliminarSesion.textContent = "Eliminar todos los bloques de esta sesión";
+
+            btnEliminarSesion.addEventListener("click", () => {
+                eliminarSesionCompleta(sesion.bloques, card);
             });
 
-            contenedor.appendChild(cardSesion);
+            card.appendChild(btnEliminarSesion);
+            contenedor.appendChild(card);
         });
     })
-    .catch(error => console.error("Error:", error));
+    .catch(err => {
+        console.error("Error:", err);
+        document.getElementById("sesiones").innerHTML = 
+            '<p class="error">Error al cargar las sesiones. Por favor, intenta de nuevo.</p>';
+    });
+
+// Eliminar un bloque individual
+function eliminarBloqueIndividual(id, elemento) {
+    if (!confirm("¿Eliminar este bloque de la sesión?")) return;
+
+    fetch(`/sesion-bloque/${id}`, {
+        method: "DELETE",
+        headers: {
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+            "Accept": "application/json"
+        }
+    })
+    .then(res => {
+        if (!res.ok) throw new Error('Error al eliminar');
+        return res.json();
+    })
+    .then(() => {
+        elemento.remove(); // Eliminar el elemento del DOM
+        alert("Bloque eliminado correctamente");
+    })
+    .catch(err => {
+        console.error("Error eliminando bloque:", err);
+        alert("Error al eliminar el bloque");
+    });
+}
+
+// Eliminar TODOS los bloques de una sesión
+function eliminarSesionCompleta(bloques, card) {
+    if (!confirm("¿Seguro que quieres eliminar TODOS los bloques de esta sesión?")) return;
+
+    if (!bloques || bloques.length === 0) {
+        alert("Esta sesión no tiene bloques para eliminar");
+        return;
+    }
+
+    const peticiones = bloques.map(bloque =>
+        fetch(`/sesion-bloque/${bloque.pivot.id}`, {
+            method: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                "Accept": "application/json"
+            }
+        })
+    );
+
+    Promise.all(peticiones)
+        .then(() => {
+            alert("Todos los bloques eliminados correctamente");
+            card.remove(); // Eliminar toda la tarjeta
+        })
+        .catch(err => {
+            console.error("Error eliminando sesión:", err);
+            alert("Error al eliminar algunos bloques");
+        });
+}
 </script>
 
 </body>

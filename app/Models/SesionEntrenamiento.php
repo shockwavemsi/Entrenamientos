@@ -16,16 +16,20 @@ class SesionEntrenamiento extends Model
         'completada'
     ];
 
-    public function bloques()
+    public function plan()
     {
-        return $this->belongsToMany(
-            BloqueEntrenamiento::class,
-            'sesion_bloque',
-            'id_sesion_entrenamiento',
-            'id_bloque_entrenamiento'
-        )->withPivot('orden', 'repeticiones')
-         ->orderBy('pivot_orden');
+        return $this->belongsTo(PlanEntrenamiento::class, 'id_plan');
     }
+public function bloques()
+{
+    return $this->belongsToMany(
+        BloqueEntrenamiento::class,
+        'sesion_bloque',
+        'id_sesion_entrenamiento',
+        'id_bloque_entrenamiento'
+    )->withPivot('id', 'orden', 'repeticiones');
+}
+
 }
 
 
