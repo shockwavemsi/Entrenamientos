@@ -18,17 +18,10 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call(CiclistaSeeder::class);
-<<<<<<< HEAD
         $this->call(BloqueEntrenamientoSeeder::class);
         $this->call(SesionEntrenamientoSeeder::class);
         $this->call(PlanEntrenamientoSeeder::class); 
         $this->call(HistoricoCiclistaSeeder::class);
 
-=======
-        $this->call(PlanEntrenamientoSeeder::class);
-        $this->call(BloqueEntrenamientoSeeder::class);
-        $this->call(SesionEntrenamientoSeeder::class);
-        $this->call(SesionBloqueSeeder::class);
->>>>>>> 9fa50a7b4beef02ddfdaef498c5645841fbcfe97
     }
 }
