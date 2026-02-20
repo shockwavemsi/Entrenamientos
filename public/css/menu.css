@@ -1,102 +1,83 @@
-/* ======== ESTILOS GENERALES ======== */
-body {
-    font-family:
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Oxygen,
-        Ubuntu,
-        Cantarell,
-        "Helvetica Neue",
-        sans-serif;
-    background: #111111;
-    margin: 0;
-    padding: 0;
-}
-
-/* ======== TÍTULO ======== */
-h1 {
-    text-align: center;
-    color: #e8d8c9;
-    margin: 20px 0;
-    font-size: 28px;
-    font-weight: 600;
-}
-
-/* ======== MENÚ SUPERIOR ======== */
+/* ======== CONTENEDOR PRINCIPAL ======== */
 #menu {
     list-style: none;
     margin: 0;
     padding: 0;
-    background: #f1ff0a;
+    background: #0a2342;
     display: flex;
     justify-content: center;
-    gap: 20px;
-    padding: 12px 0;
+    gap: 25px;
+    padding: 14px 0;
+    font-family: "Poppins", sans-serif;
 }
 
-/* Elementos principales */
+/* ======== ITEMS PRINCIPALES ======== */
 #menu > li {
     position: relative;
 }
 
-/* Enlaces principales */
 #menu > li > a {
-    color: rgb(43, 43, 4);
+    color: #dce6f7;
     text-decoration: none;
-    font-size: 16px;
-    padding: 10px 15px;
-    display: block;
-    transition: background 0.2s;
-    border-radius: 4px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.25s ease, color 0.25s ease;
 }
 
 #menu > li > a:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #185adb;
+    color: #ffffff;
 }
 
-/* Submenú */
+/* ======== SUBMENÚ ======== */
 .submenu {
     list-style: none;
-    padding: 20px;
-    margin: 0;
-    background: #ffffff;
     position: absolute;
-    top: 100%; /* Se pega justo debajo del elemento padre */
+    top: 42px;
     left: 0;
-    min-width: 180px;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    background: #102f57;
+    padding: 10px 0;
+    border-radius: 8px;
+    min-width: 200px;
     display: none;
-    z-index: 1000;
+    flex-direction: column;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    animation: fadeIn 0.25s ease;
 }
 
-/* Submenú */
-.submenu a {
+/* Animación */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.submenu li a {
+    display: block;
+    padding: 10px 16px;
+    color: #dce6f7;
     text-decoration: none;
+    transition: background 0.2s ease, padding-left 0.2s ease;
 }
 
-/* Mostrar submenú al pasar el ratón */
-#menu > li:hover .submenu {
-    display: block;
+.submenu li a:hover {
+    background: #185adb;
+    padding-left: 22px;
 }
 
-/* ======== BOTÓN DE LOGOUT ======== */
-form button {
-    display: block;
-    margin: 30px auto;
-    padding: 10px 20px;
-    background: #dc3545;
-    border: none;
-    color: white;
-    font-size: 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.2s;
+/* Mostrar submenú */
+.show-submenu {
+    display: flex !important;
 }
 
-form button:hover {
-    background: #b52a37;
+/* Flecha indicadora */
+#menu > li.has-children > a::after {
+    content: "▾";
+    margin-left: 6px;
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+#menu > li.open > a::after {
+    transform: rotate(180deg);
 }

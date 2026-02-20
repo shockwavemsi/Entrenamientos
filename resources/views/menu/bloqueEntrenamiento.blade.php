@@ -10,11 +10,15 @@
 </head>
 
 <body>
+    <form action="{{ route('logout') }}" method="POST">
+    @csrf
+    <button type="submit">Cerrar sesión</button>
+</form>
     <script src="{{ asset('js/menu.js') }}"></script>
     <div id="menu"></div>
 
 
-    <h1>Bloques de entrenamiento</h1>  <!-- Cambié el título para que sea más preciso -->
+    <h1>Bloques de entrenamiento</h1>
     <script src="{{ asset('js/bloqueEntrenamiento.js') }}"></script>
     <div id="bloques"></div>
 
