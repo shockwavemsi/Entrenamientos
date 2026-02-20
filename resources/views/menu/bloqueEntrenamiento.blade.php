@@ -3,20 +3,22 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Bloques del Ciclista</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bloqueEntrenamiento.css') }}">
+    <title>Login Ciclistas</title>
 </head>
 
+
 <body>
-    <script src="{{ asset('js/menu.js') }}"></script>
-    <div id="menu"></div>
+<h1>Bloque entrenamiento</h1>
+    <script>
+    fetch('/api/bloques')
+        .then(response => response.json())
+        .then(data => {
+            console.log("Bloques:", data);
+            // Aquí ya puedes pintar los datos en la página
+        })
+        .catch(error => console.error("Error:", error));
+</script>
 
-
-    <h1>Bloques de entrenamiento</h1>  <!-- Cambié el título para que sea más preciso -->
-    <script src="{{ asset('js/bloqueEntrenamiento.js') }}"></script>
-    <div id="bloques"></div>
 
 </body>
 

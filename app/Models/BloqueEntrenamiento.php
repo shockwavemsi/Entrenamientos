@@ -29,4 +29,8 @@ class BloqueEntrenamiento extends Model
             'id_sesion_entrenamiento'
         )->withPivot('orden', 'repeticiones');
     }
+<<<<<<< HEAD:app/Models/bloqueEntrenamiento.php
 }
+=======
+}
+>>>>>>> 9fa50a7b4beef02ddfdaef498c5645841fbcfe97:app/Models/BloqueEntrenamiento.php
