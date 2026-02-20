@@ -1,12 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const menuContainer = document.getElementById("menu");
 
-    // Ruta donde tienes el JSON (puede ser una ruta Laravel o un archivo público)
-    fetch("/menu.json") 
+    fetch("/menu.json")
         .then(response => response.json())
-        .then(data => {
-            renderMenu(data, menuContainer);
-        })
+        .then(data => renderMenu(data, menuContainer))
         .catch(error => console.error("Error cargando el menú:", error));
 });
 
@@ -20,9 +17,10 @@ function renderMenu(items, container) {
         link.href = item.url;
         li.appendChild(link);
 
-        // Si tiene hijos, crear submenú
+        // Submenú si tiene hijos
         if (item.children && item.children.length > 0) {
             const subUl = document.createElement("ul");
+            subUl.classList.add("submenu");
 
             item.children.forEach(child => {
                 const subLi = document.createElement("li");

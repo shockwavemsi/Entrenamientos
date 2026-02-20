@@ -77,4 +77,23 @@ class CiclistaController extends Controller
 
         return redirect('/login')->with('success', 'Cuenta creada correctamente. ¡Puedes iniciar sesión!');
     }
+
+    public function mostrarDatosCiclista()
+    {
+        return view('menu.ciclista');
+    }
+    public function index()
+    {
+        $ciclista = Auth::user();
+
+        $historico = \App\Models\HistoricoCiclista::where('id_ciclista', $ciclista->id)
+            ->orderBy('fecha', 'desc')
+            ->get();
+
+        return response()->json([
+            'ciclista' => $ciclista,
+            'historico' => $historico
+        ]);
+    }
+
 }

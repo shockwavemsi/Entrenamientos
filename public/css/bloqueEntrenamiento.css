@@ -1,0 +1,50 @@
+/* ======== TARJETAS DE BLOQUES ======== */
+.bloque-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.bloque-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.bloque-card h2 {
+    margin-top: 0;
+    color: #1a73e8;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.bloque-card p {
+    margin: 6px 0;
+    font-size: 0.95rem;
+}
+
+/* ======== BOTÓN ELIMINAR ======== */
+.bloque-card button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: background 0.2s ease, transform 0.1s ease;
+    background: #e53935;
+    color: white;
+}
+
+.bloque-card button:hover {
+    transform: scale(1.03);
+}
+
+/* ======== CONTENEDOR ======== */
+#bloques {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
