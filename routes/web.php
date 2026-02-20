@@ -1,41 +1,44 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\CiclistaController;
 use App\Http\Controllers\BloqueEntrenamientoController;
 use App\Http\Controllers\SesionEntrenamientoController;
 use App\Http\Controllers\PlanEntrenamientoController;
 use App\Http\Controllers\SesionBloqueController;
 
-/*
-|--------------------------------------------------------------------------
-| PÁGINA PRINCIPAL
-|--------------------------------------------------------------------------
-*/
 Route::get('/', function () {
-    $visited = DB::select('SELECT * FROM places WHERE visited = ?', [1]);
-    $togo    = DB::select('SELECT * FROM places WHERE visited = ?', [0]);
+  $visited = DB::select('select * from places where visited = ?', [1]); 
+  $togo = DB::select('select * from places where visited = ?', [0]);
 
-    return view('travel_list', [
-        'visited' => $visited,
-        'togo'    => $togo
-    ]);
+  return view('travel_list', ['visited' => $visited, 'togo' => $togo ] );
+  
 });
-
-/*
-|--------------------------------------------------------------------------
-| AUTENTICACIÓN
-|--------------------------------------------------------------------------
-*/
 Route::get('login', [CiclistaController::class, 'showLoginForm'])->name('login');
 Route::post('login', [CiclistaController::class, 'login']);
 Route::post('logout', [CiclistaController::class, 'logout'])->name('logout');
 
+// Dashboard (protegido)
+Route::get('/bienvenida', [CiclistaController::class, 'showBienvenida'])->middleware('auth');
+
 Route::get('register', [CiclistaController::class, 'registerForm'])->name('register');
+
+// Procesar registro
 Route::post('register', [CiclistaController::class, 'register']);
 
+//Mostrar datos del ciclista
+Route::get('/api/ciclista', [CiclistaController::class, 'index']);
+Route::get('/ciclista', [CiclistaController::class, 'mostrarDatosCiclista'])->middleware('auth');
+
+Route::get('/api/bloques', [BloqueEntrenamientoController::class, 'index']);
+Route::get('/api/bloques-del-ciclista', [BloqueEntrenamientoController::class, 'bloquesDelCiclista'])->middleware('auth');
+// Vista
+/*
+|--------------------------------------------------------------------------
+| BLOQUES DE ENTRENAMIENTO
+|--------------------------------------------------------------------------
+*/
+// API
 Route::get('/api/bloques', [BloqueEntrenamientoController::class, 'index']);
 
 // Vistas

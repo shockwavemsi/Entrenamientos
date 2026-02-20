@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SesionEntrenamientoSeeder::class);
         $this->call(PlanEntrenamientoSeeder::class); 
         $this->call(HistoricoCiclistaSeeder::class);
+        $this->call(SesionBloqueSeeder::class);
 
     }
 }
