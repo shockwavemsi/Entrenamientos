@@ -25,7 +25,7 @@
         "url": "/sesion",
         "children": [
             { "name": "Listar Sesiones", "url": "/sesion" },
-            { "name": "Crear Sesión", "url": "/sesion/crear" }
+            { "name": "Crear Sesión", "url": "/sesiones/crear" }
         ]
     },
     {
@@ -33,13 +33,14 @@
         "url": "/plan",
         "children": [
             { "name": "Listar Planes", "url": "/plan" },
-            { "name": "Crear Plan", "url": "/plan/crear" }
+            { "name": "Crear Plan", "url": "/planes/crear" }
         ]
     },
     {
         "name": "Resultados",
         "url": "/resultado",
         "children": [
+            { "name": "Ver Resultados", "url": "/resultado" },
             { "name": "Registrar Resultado", "url": "/resultado/crear" }
         ]
     }

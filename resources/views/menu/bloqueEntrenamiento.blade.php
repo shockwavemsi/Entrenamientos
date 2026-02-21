@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <title>Bloques del Ciclista</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bloqueEntrenamiento.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vistas/bloqueEntrenamiento.css') }}">
 </head>
 
 <body>

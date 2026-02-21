@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/planEntrenamiento.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vistas/planEntrenamiento.css') }}">
     <title>Planes de Entrenamiento</title>
 </head>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\BloqueEntrenamientoController;
 use App\Http\Controllers\SesionEntrenamientoController;
 use App\Http\Controllers\PlanEntrenamientoController;
 use App\Http\Controllers\SesionBloqueController;
+use App\Http\Controllers\ResultadoController;
 
 Route::get('/', function () {
   $visited = DB::select('select * from places where visited = ?', [1]); 
@@ -64,7 +65,7 @@ Route::post('/api/bloques/crear-rapido', [BloqueEntrenamientoController::class, 
 Route::get('/api/sesiones', [SesionEntrenamientoController::class, 'index']);
 Route::get('/sesion', [SesionEntrenamientoController::class, 'mostrarSesiones'])->middleware('auth');
 Route::delete('/sesion/{id}', [SesionEntrenamientoController::class, 'destroySesionEntrenamiento']);
-Route::get('/sesion/crear', [SesionEntrenamientoController::class, 'create'])->middleware('auth');
+Route::get('/sesiones/crear', [SesionEntrenamientoController::class, 'create'])->middleware('auth');
 // Guardar el plan (POST)
 Route::post('/sesion/crear', [SesionEntrenamientoController::class, 'store'])->name('sesion.store');
 
@@ -74,7 +75,7 @@ Route::get('/plan', [PlanEntrenamientoController::class, 'mostrarPlanes'])->midd
 Route::delete('/plan/{id}', [PlanEntrenamientoController::class, 'destroyPlanEntrenamiento']);
 Route::put('/plan/{id}', [PlanEntrenamientoController::class, 'update']);
 // Mostrar formulario de creación de plan
-Route::get('/plan/crear', [PlanEntrenamientoController::class, 'create'])->middleware('auth');
+Route::get('/planes/crear', [PlanEntrenamientoController::class, 'create'])->middleware('auth');
 // Guardar el plan (POST)
 Route::post('/plan/crear', [PlanEntrenamientoController::class, 'store'])->name('plan.store');
 
@@ -92,7 +93,7 @@ Route::get('/sesionbloque/crear', [SesionBloqueController::class, 'crearSesionCo
     ->name('relaciones.crear')  // ← AÑADE ESTO
     ->middleware('auth');
 
-// 🔥 NUEVA: Guardar relación
+// Guardar relación
 Route::post('/sesion-bloque/crear', [SesionBloqueController::class, 'store'])
     ->name('relaciones.store')  // ← ESTE ES EL NOMBRE QUE BUSCAS
     ->middleware('auth');
@@ -106,3 +107,25 @@ Route::delete('/sesion-bloque/{id}', [SesionBloqueController::class, 'destroy'])
     ->name('relaciones.destroy')
     ->middleware('auth');
 
+ /*
+|--------------------------------------------------------------------------
+| RESULTADOS
+|--------------------------------------------------------------------------
+*/
+// Vista principal de resultados (listado)
+Route::get('/resultado', [ResultadoController::class, 'mostrarResultados'])
+    ->name('resultado.lista')
+    ->middleware('auth');
+
+// Vista del formulario para crear resultado
+Route::get('/resultado/crear', [ResultadoController::class, 'create'])
+    ->name('resultado.crear')
+    ->middleware('auth');
+
+// Guardar un nuevo resultado en la tabla entrenamientos
+Route::post('/resultado/crear', [ResultadoController::class, 'store'])
+    ->name('resultado.guardar')  // ← Nombre diferente para POST
+    ->middleware('auth');
+
+// Ver detalle de un resultado específico
+Route::get('/resultado/{id}', [ResultadoController::class, 'show'])->middleware('auth');

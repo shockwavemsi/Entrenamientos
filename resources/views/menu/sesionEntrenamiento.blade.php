@@ -6,14 +6,11 @@
     <title>Sesiones</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
-        .sesion-card {
-            border: 1px solid #ccc;
-            padding: 12px;
-            margin-bottom: 10px;
-        }
+        
     </style>
+    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/sesionEntrenamiento.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vistas/sesionEntrenamiento.css') }}">
 </head>
 
 <body>

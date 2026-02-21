@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\SesionEntrenamiento;   // ← FALTABA ESTE
-use App\Models\BloqueEntrenamiento;   // ← Y ESTE TAMBIÉN
+use App\Models\SesionEntrenamiento;   
+use App\Models\BloqueEntrenamiento;   
 use App\Models\SesionBloque;
  use App\Models\PlanEntrenamiento;
 use Illuminate\Http\Request;

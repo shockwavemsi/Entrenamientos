@@ -23,6 +23,11 @@ class DatabaseSeeder extends Seeder
         $this->call(PlanEntrenamientoSeeder::class); 
         $this->call(HistoricoCiclistaSeeder::class);
         $this->call(SesionBloqueSeeder::class);
+        $this->call(TipoComponenteSeeder::class);
+        $this->call(BicicletaSeeder::class);
+        $this->call(ComponenteBicicletaSeeder::class);
+        // falta Entrenamiento seeder
+
 
     }
 }

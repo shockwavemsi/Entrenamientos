@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>Sesiones con Bloques</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/menu.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/sesionBloque.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vistas/sesionBloque.css') }}">
     
 </head>
 <body>

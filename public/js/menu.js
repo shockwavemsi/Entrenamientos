@@ -2,13 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuContainer = document.getElementById("menu");
 
     fetch("/menu.json")
-        .then(response => response.json())
-        .then(data => renderMenu(data, menuContainer))
-        .catch(error => console.error("Error cargando el menú:", error));
+        .then((response) => response.json())
+        .then((data) => renderMenu(data, menuContainer))
+        .catch((error) => console.error("Error cargando el menú:", error));
 });
 
 function renderMenu(items, container) {
-    items.forEach(item => {
+    items.forEach((item) => {
         const li = document.createElement("li");
 
         const link = document.createElement("a");
@@ -23,7 +23,7 @@ function renderMenu(items, container) {
             const subUl = document.createElement("ul");
             subUl.classList.add("submenu");
 
-            item.children.forEach(child => {
+            item.children.forEach((child) => {
                 const subLi = document.createElement("li");
                 const subLink = document.createElement("a");
 
@@ -37,7 +37,7 @@ function renderMenu(items, container) {
             li.appendChild(subUl);
 
             // Evento para abrir/cerrar submenú
-            link.addEventListener("click", e => {
+            link.addEventListener("click", (e) => {
                 e.preventDefault();
                 subUl.classList.toggle("show-submenu");
                 li.classList.toggle("open");

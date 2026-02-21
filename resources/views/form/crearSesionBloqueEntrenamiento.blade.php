@@ -5,137 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Bloques y Asignar a Sesión</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ asset('css/formularios/crearSesionBloqueEntrenamientos.css') }}">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 20px;
-            background: #f5f5f5;
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .row {
-            display: flex;
-            gap: 20px;
-        }
-        .columna {
-            flex: 1;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .columna h2 {
-            color: #007bff;
-            margin-top: 0;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        .btn-crear-bloque {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px 0;
-            width: 100%;
-            font-size: 16px;
-        }
-        .btn-crear-bloque:hover {
-            background: #218838;
-        }
-        .btn-submit {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-        }
-        .btn-submit:hover {
-            background: #0056b3;
-        }
-        .bloque-item {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-        .bloque-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-        .bloque-nombre {
-            font-weight: bold;
-            color: #28a745;
-        }
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        .hidden {
-            display: none;
-        }
-        select[multiple] {
-            height: 200px;
-        }
-        .mensaje-exito {
-            background: #d4edda;
-            color: #155724;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            display: none;
-        }
-        small {
-            color: #666;
-            font-size: 12px;
-        }
-        .aviso-exito {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border: 1px solid #c3e6cb;
-        }
-        .aviso-error {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
-        }
+      
     </style>
 </head>
 <body>
@@ -152,7 +24,7 @@
     @if($errors->any())
         <div class="aviso-error">
             <strong>❌ Errores:</strong>
-            <ul style="margin: 10px 0 0 20px;">
+            <ul>
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -298,9 +170,7 @@
         </div>
     </div>
     
-    <a href="/sesionbloque" style="display: block; text-align: center; margin-top: 20px; color: #007bff; text-decoration: none;">
-        ← Volver a Sesiones
-    </a>
+    <a href="/sesionbloque" class="back-link">← Volver a Sesiones</a>
 
     <script>
         function toggleSesionForm() {
@@ -340,7 +210,14 @@
             // Validar campos obligatorios
             if (!datos.nombre || !datos.tipo || !datos.duracion_estimada || 
                 !datos.potencia_pct_min || !datos.potencia_pct_max || !datos.pulso_reserva_pct) {
-                alert('Por favor completa todos los campos obligatorios');
+                alert('⚠️ Por favor completa todos los campos obligatorios');
+                return;
+            }
+
+            // Validar formato de duración
+            const duracionRegex = /^([0-9]{2}):([0-5][0-9]):([0-5][0-9])$/;
+            if (!duracionRegex.test(datos.duracion_estimada)) {
+                alert('⚠️ La duración debe tener formato HH:MM:SS (ej: 00:08:00)');
                 return;
             }
 
@@ -356,7 +233,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    alert('Error: ' + data.error);
+                    alert('❌ Error: ' + data.error);
                 } else {
                     // Mostrar mensaje de éxito
                     const mensaje = document.getElementById('mensaje-exito');
@@ -380,6 +257,9 @@
                     option.textContent = data.nombre + ' (' + data.tipo + ')';
                     select.appendChild(option);
                     
+                    // Seleccionar automáticamente el nuevo bloque
+                    option.selected = true;
+                    
                     // Ocultar mensaje después de 3 segundos
                     setTimeout(() => {
                         mensaje.style.display = 'none';
@@ -388,7 +268,7 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Error al crear el bloque');
+                alert('❌ Error al crear el bloque');
             });
         }
 
