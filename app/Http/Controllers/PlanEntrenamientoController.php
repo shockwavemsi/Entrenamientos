@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PlanEntrenamientoController extends Controller
 {
-    /**
-     * API: devolver planes en JSON
-     */
     public function index()
     {
         $idCiclista = Auth::user()->id;
@@ -20,9 +17,6 @@ class PlanEntrenamientoController extends Controller
         return response()->json($planes);
     }
 
-    /**
-     * Vista HTML que mostrará los planes
-     */
     public function mostrarPlanes()
     {
         return view('menu.planEntrenamiento');
@@ -67,7 +61,14 @@ class PlanEntrenamientoController extends Controller
             'activo' => $request->activo
         ]);
 
-        return redirect('/bienvenida'); // o donde quieras volver
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => 'Plan actualizado correctamente',
+            ]);
+        }
+
+        return redirect()->route('plan.crear')
+            ->with('success', 'Plan creado correctamente');
     }
     public function show(string $id)
     {

@@ -1,5 +1,5 @@
 let offset = 0;
-        const limit = 3; // por ahora me muestra tres y hace escroll habria que meter ma datos
+        const limit = 10;
         let cargando = false;
         let fin = false;
 

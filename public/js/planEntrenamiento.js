@@ -34,16 +34,12 @@ fetch('/api/planes')
                     const hr = document.createElement('hr');
                     card.appendChild(hr);
 
-                    // -------------------------
                     // BOTÓN EDITAR
-                    // -------------------------
                     const btnEditar = document.createElement("button");
                     btnEditar.textContent = "Editar";
                     card.appendChild(btnEditar);
 
-                    // -------------------------
                     // EDITOR OCULTO
-                    // -------------------------
                     const editor = document.createElement("div");
                     editor.style.display = "none";
 
@@ -96,16 +92,12 @@ fetch('/api/planes')
                     btnCancelar.addEventListener("click", () => {
                         editor.style.display = "none";
                     });
-
-                    // -------------------------
                     // GUARDAR CAMBIOS (PUT)
-                    // -------------------------
                     btnGuardar.addEventListener("click", () => {
                         fetch(`/plan/${plan.id}`, {
                             method: "PUT",
                             headers: {
                                 "Content-Type": "application/json",
-                                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
                                 "Accept": "application/json"
                             },
                             body: JSON.stringify({ // coge los valores que el usuario escribio, los convierte en json s elos manda a laravel
@@ -119,7 +111,6 @@ fetch('/api/planes')
                         })
                             .then(res => res.json())
                             .then(data => {
-                                // Actualizar DOM sin recargar
                                 titulo.textContent = inputNombre.value;
                                 descripcion.textContent = "Descripción: " + inputDescripcion.value;
                                 fechaInicio.textContent = "Fecha inicio: " + inputFechaInicio.value;
@@ -131,9 +122,7 @@ fetch('/api/planes')
                             });
                     });
 
-                    // -------------------------
                     // BOTÓN ELIMINAR
-                    // -------------------------
                     const btnEliminar = document.createElement("button");
                     btnEliminar.textContent = "Eliminar";
 
@@ -149,13 +138,11 @@ fetch('/api/planes')
             })
             .catch(error => console.error("Error:", error));
 
-
         // DELETE
         function eliminarPlan(id) {
             fetch(`/plan/${id}`, {
                 method: "DELETE",
                 headers: {
-                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
                     "Accept": "application/json"
                 }
             })
@@ -163,7 +150,4 @@ fetch('/api/planes')
                 .then(data => console.log("Plan eliminado:", data))
                 .catch(err => console.error("Error eliminando plan:", err));
         }
-        let botonCrear = document.getElementById("botonCrear");
-        botonCrear.addEventListener("click", function(){
-            
-        })
+        

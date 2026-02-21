@@ -5,7 +5,7 @@ fetch('/api/sesiones-con-bloques')
     })
     .then(data => {
         const contenedor = document.getElementById("sesiones");
-        contenedor.innerHTML = ''; // Limpiar mensaje de carga
+        contenedor.innerHTML = ''; 
 
         if (data.length === 0) {
             contenedor.innerHTML = '<p style="text-align: center; color: #666;">No hay sesiones con bloques.</p>';
@@ -16,13 +16,11 @@ fetch('/api/sesiones-con-bloques')
             const card = document.createElement("div");
             card.className = "sesion-card";
 
-            // Título de la sesión
             const titulo = document.createElement("h2");
             titulo.className = "sesion-titulo";
             titulo.textContent = sesion.nombre;
             card.appendChild(titulo);
 
-            // Fecha (si existe)
             if (sesion.fecha) {
                 const fecha = document.createElement("p");
                 fecha.className = "sesion-fecha";
@@ -30,13 +28,11 @@ fetch('/api/sesiones-con-bloques')
                 card.appendChild(fecha);
             }
 
-            // Subtítulo de bloques
             const subtitulo = document.createElement("h3");
             subtitulo.className = "bloques-subtitulo";
             subtitulo.textContent = "Bloques asignados:";
             card.appendChild(subtitulo);
 
-            // Bloques
             if (sesion.bloques && sesion.bloques.length > 0) {
                 sesion.bloques.forEach(bloque => {
                     const bloqueDiv = document.createElement("div");

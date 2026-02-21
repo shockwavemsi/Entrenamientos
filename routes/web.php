@@ -64,7 +64,7 @@ Route::post('/api/bloques/crear-rapido', [BloqueEntrenamientoController::class, 
 Route::get('/api/sesiones', [SesionEntrenamientoController::class, 'index']);
 Route::get('/sesion', [SesionEntrenamientoController::class, 'mostrarSesiones'])->middleware('auth');
 Route::delete('/sesion/{id}', [SesionEntrenamientoController::class, 'destroySesionEntrenamiento']);
-Route::get('/sesion/crear', [SesionEntrenamientoController::class, 'create'])->middleware('auth');
+Route::get('/sesion/crear', [SesionEntrenamientoController::class, 'create'])->middleware('auth')->name('sesion.crear');;
 // Guardar el plan (POST)
 Route::post('/sesion/crear', [SesionEntrenamientoController::class, 'store'])->name('sesion.store');
 
@@ -74,7 +74,7 @@ Route::get('/plan', [PlanEntrenamientoController::class, 'mostrarPlanes'])->midd
 Route::delete('/plan/{id}', [PlanEntrenamientoController::class, 'destroyPlanEntrenamiento']);
 Route::put('/plan/{id}', [PlanEntrenamientoController::class, 'update']);
 // Mostrar formulario de creación de plan
-Route::get('/plan/crear', [PlanEntrenamientoController::class, 'create'])->middleware('auth');
+Route::get('/plan/crear', [PlanEntrenamientoController::class, 'create'])->middleware('auth')->name('plan.crear');
 // Guardar el plan (POST)
 Route::post('/plan/crear', [PlanEntrenamientoController::class, 'store'])->name('plan.store');
 
@@ -89,12 +89,11 @@ Route::get('/sesionbloque', [SesionBloqueController::class, 'mostrarSesionBloque
 
 // Vistas
 Route::get('/sesionbloque/crear', [SesionBloqueController::class, 'crearSesionConBloques'])
-    ->name('relaciones.crear')  // ← AÑADE ESTO
+    ->name('relaciones.crear')  
     ->middleware('auth');
 
-// 🔥 NUEVA: Guardar relación
 Route::post('/sesion-bloque/crear', [SesionBloqueController::class, 'store'])
-    ->name('relaciones.store')  // ← ESTE ES EL NOMBRE QUE BUSCAS
+    ->name('relaciones.store') 
     ->middleware('auth');
 
 // API para obtener sesiones con bloques
