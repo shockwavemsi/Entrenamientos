@@ -9,49 +9,40 @@ use App\Models\Ciclista;
 
 class CiclistaController extends Controller
 {
-    // Mostrar formulario de login
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
-    // Procesar login
     public function login(Request $request)
     {
-        // Buscar ciclista por email
         $ciclista = Ciclista::where('email', $request->email)->first();
 
-        // Verificar contraseña
         if ($ciclista && Hash::check($request->password, $ciclista->password)) {
             Auth::login($ciclista);
 
-            // IMPORTANTE: redirigir, NO return view()
             return redirect('/bienvenida');
         }
 
         return back()->with('error', 'Correo o contraseña incorrectos');
     }
 
-    // Logout
     public function logout()
     {
         Auth::logout();
         return redirect('/login');
     }
 
-    // Vista protegida del dashboard
     public function showBienvenida()
     {
         return view('bienvenida');
     }
 
-    // Mostrar formulario de registro
     public function registerForm()
     {
         return view('auth.register');
     }
 
-    // Procesar registro
     public function register(Request $request)
     {
         $request->validate([
@@ -64,7 +55,6 @@ class CiclistaController extends Controller
             'altura_base' => 'required|integer',
         ]);
 
-        // Crear ciclista con contraseña encriptada
         Ciclista::create([
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,

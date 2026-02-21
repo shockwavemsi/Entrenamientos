@@ -9,21 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class SesionEntrenamientoController extends Controller
 {
-    /**
-     * API: devolver sesiones en JSON
-     */
     public function index(Request $request)
     {
         $idCiclista = Auth::id();
 
-        // Leer offset y limit de la URL
         $offset = $request->query('offset', 0);
-        $limit = $request->query('limit', 2);
+        $limit = $request->query('limit', 10);
 
-        // Obtener los planes del ciclista
         $planes = PlanEntrenamiento::where('id_ciclista', $idCiclista)->pluck('id');
 
-        // Obtener sesiones paginadas
         $sesiones = SesionEntrenamiento::whereIn('id_plan', $planes)
             ->orderBy('fecha', 'desc')
             ->offset($offset)
@@ -41,10 +35,6 @@ class SesionEntrenamientoController extends Controller
         return response()->json(['message' => 'Sesión eliminada correctamente']);
     }
 
-
-    /**
-     * Vista HTML que mostrará las sesiones
-     */
     public function mostrarSesiones()
     {
         return view('menu.sesionEntrenamiento');
@@ -52,26 +42,29 @@ class SesionEntrenamientoController extends Controller
 
     public function create()
     {
-        // Obtener los planes del ciclista logueado
         $planes = PlanEntrenamiento::where('id_ciclista', Auth::id())->get();
 
         return view('menu.sesionCrear', compact('planes')); //['planes' => $planes]
     }
 
-    /**
-     * Guardar sesión
-     */
     public function store(Request $request)
     {
         SesionEntrenamiento::create([
             'id_ciclista' => Auth::id(),
-            'id_plan' => $request->id_plan,   // ← IMPORTANTE
+            'id_plan' => $request->id_plan,   
             'nombre' => $request->nombre,
             'fecha' => $request->fecha,
             'descripcion' => $request->descripcion,
             'completada' => $request->completada
         ]);
-        return redirect('/bienvenida'); // o /bienvenida
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => 'Sesion actualizado correctamente',
+            ]);
+        }
+
+        return redirect()->route('sesion.crear')
+            ->with('success', 'Sesion creada correctamente');
     }
 
     public function show(string $id)

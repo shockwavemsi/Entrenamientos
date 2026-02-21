@@ -2,9 +2,6 @@ fetch('/api/ciclista')
         .then(response => response.json())
         .then(data => {
 
-            // -------------------------
-            // 1. Datos del ciclista
-            // -------------------------
             const contenedor = document.getElementById('datos-ciclista');
             const c = data.ciclista;
 
@@ -28,10 +25,6 @@ fetch('/api/ciclista')
             alturaBase.textContent = "Altura base: " + c.altura_base + " cm";
             contenedor.appendChild(alturaBase);
 
-
-            // -------------------------
-            // 2. Histórico
-            // -------------------------
             const tbody = document.getElementById('tabla-historico');
 
             data.historico.forEach(h => {

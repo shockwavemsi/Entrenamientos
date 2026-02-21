@@ -90,12 +90,12 @@ Route::get('/sesionbloque', [SesionBloqueController::class, 'mostrarSesionBloque
 
 // Vistas
 Route::get('/sesionbloque/crear', [SesionBloqueController::class, 'crearSesionConBloques'])
-    ->name('relaciones.crear')  // ← AÑADE ESTO
+    ->name('relaciones.crear')  
     ->middleware('auth');
 
 // Guardar relación
 Route::post('/sesion-bloque/crear', [SesionBloqueController::class, 'store'])
-    ->name('relaciones.store')  // ← ESTE ES EL NOMBRE QUE BUSCAS
+    ->name('relaciones.store') 
     ->middleware('auth');
 
 // API para obtener sesiones con bloques

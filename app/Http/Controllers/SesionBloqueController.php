@@ -9,18 +9,12 @@ use Illuminate\Http\Request;
 
 class SesionBloqueController extends Controller
 {
-    /**
-     * API: devolver todos los registros de sesion_bloque en JSON
-     */
     public function index()
     {
         $pivot = SesionBloque::all();
         return response()->json($pivot);
     }
 
-    /**
- * API: Devuelve las sesiones con sus bloques del ciclista autenticado
- */
 public function sesionesConBloques()
 {
     $userId = auth()->id();
