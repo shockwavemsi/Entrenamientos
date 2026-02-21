@@ -29,4 +29,6 @@ class BloqueEntrenamiento extends Model
             'id_sesion_entrenamiento'
         )->withPivot('orden', 'repeticiones');
     }
+
 }
+

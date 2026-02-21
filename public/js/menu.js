@@ -11,14 +11,15 @@ function renderMenu(items, container) {
     items.forEach(item => {
         const li = document.createElement("li");
 
-        // Enlace principal
         const link = document.createElement("a");
         link.textContent = item.name;
-        link.href = item.url;
+        link.href = item.url || "#";
         li.appendChild(link);
 
-        // Submenú si tiene hijos
+        // Si tiene hijos → submenú
         if (item.children && item.children.length > 0) {
+            li.classList.add("has-children");
+
             const subUl = document.createElement("ul");
             subUl.classList.add("submenu");
 
@@ -34,6 +35,13 @@ function renderMenu(items, container) {
             });
 
             li.appendChild(subUl);
+
+            // Evento para abrir/cerrar submenú
+            link.addEventListener("click", e => {
+                e.preventDefault();
+                subUl.classList.toggle("show-submenu");
+                li.classList.toggle("open");
+            });
         }
 
         container.appendChild(li);
