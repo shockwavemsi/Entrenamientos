@@ -21,4 +21,10 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
 
+# Solución de los permisos
+RUN chmod -R 777 storage bootstrap/cache
+RUN chmod -R 777 storage/framework/views
+RUN chmod -R 777 storage/framework/cache
+RUN chmod -R 777 storage/framework/sessions
+
 #USER www-data
