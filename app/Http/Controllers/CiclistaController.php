@@ -26,7 +26,7 @@ class CiclistaController extends Controller
             Auth::login($ciclista);
 
             // IMPORTANTE: redirigir, NO return view()
-            return redirect('/bienvenida');
+            return redirect('/ciclista');
         }
 
         return back()->with('error', 'Correo o contraseña incorrectos');

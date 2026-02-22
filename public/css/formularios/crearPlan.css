@@ -1,92 +1,478 @@
+/* ======== VARIABLES DE COLOR ======== */
+:root {
+  --rich-black: #030812;
+  --navy-blue: #020764;
+  --dark-cerulean: #043780;
+  --sapphire: #025ec4;
+  --spiro-disco-ball: #0ecced;
+
+  /* Variables semánticas - MODO CLARO (por defecto) */
+  --primary-dark: var(--rich-black);
+  --primary-deep: var(--navy-blue);
+  --primary-medium: var(--dark-cerulean);
+  --primary-bright: var(--sapphire);
+  --accent-color: var(--spiro-disco-ball);
+
+  /* Fondo y texto - MODO CLARO */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --border-light: #e2e8f0;
+  --background-hover: #f1f5f9;
+  --shadow-color: rgba(2, 7, 100, 0.12);
+  --shadow-hover: rgba(2, 7, 100, 0.18);
+
+  /* Colores específicos */
+  --success-bg: #d4edda;
+  --success-text: #155724;
+  --error-bg: #f8d7da;
+  --error-text: #721c24;
+  --success-border: #28a745;
+  --error-border: #dc3545;
+}
+
+/* ======== MODO OSCURO ======== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #0a0f1a;
+    --bg-secondary: #111827;
+    --text-primary: #e5e7eb;
+    --text-secondary: #9ca3af;
+    --border-light: #1f2937;
+    --background-hover: #1e293b;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --shadow-hover: rgba(0, 0, 0, 0.5);
+    --sapphire: #2d7ee9;
+    --spiro-disco-ball: #2fd8f5;
+    --success-bg: #1e3a2a;
+    --success-text: #a7e0b5;
+    --error-bg: #3f2a2a;
+    --error-text: #f8b5b5;
+    --success-border: #34ce57;
+    --error-border: #f87171;
+  }
+
+  body {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+}
+
 /* ======== ESTILOS GENERALES ======== */
 body {
-    font-family: "Poppins", Arial, sans-serif;
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #f4f6f9;
-    color: #333;
+  font-family: "Poppins", Arial, sans-serif;
+  max-width: 700px;
+  margin: 100px auto 40px;
+  padding: 20px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  line-height: 1.5;
 }
 
 /* ======== CONTENEDOR PRINCIPAL ======== */
 .container {
-    background: #fff;
-    padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: var(--bg-primary);
+  padding: 35px;
+  border-radius: 24px;
+  box-shadow: 0 8px 30px var(--shadow-color);
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Línea decorativa superior */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--sapphire), var(--spiro-disco-ball));
+  opacity: 0.8;
+}
+
+.container:hover {
+  box-shadow: 0 15px 35px var(--shadow-hover);
+  border-color: var(--sapphire);
 }
 
 /* ======== TÍTULO ======== */
 h1 {
-    text-align: center;
-    color: #1a73e8;
-    margin-bottom: 25px;
-    font-size: 1.6rem;
+  text-align: center;
+  color: var(--sapphire);
+  margin: 0 0 30px 0;
+  font-size: 2rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--sapphire), var(--spiro-disco-ball));
+  border-radius: 2px;
 }
 
 /* ======== FORMULARIO ======== */
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Grupos de formulario */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 label {
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: #444;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+label::after {
+  content: ":";
+  margin-left: 2px;
+  color: var(--sapphire);
 }
 
 input,
-select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #d0d7e2;
-    border-radius: 8px;
-    font-size: 1rem;
-    background: #fafbfc;
-    transition:
-        border 0.2s ease,
-        box-shadow 0.2s ease;
+select,
+textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--sapphire);
+  background: var(--bg-primary);
 }
 
 input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--sapphire);
+  box-shadow: 0 0 0 4px rgba(2, 94, 196, 0.1);
+  background: var(--bg-primary);
+}
+
+/* Placeholder */
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* Select personalizado */
+/* ======== SELECT - VERSIÓN TRADICIONAL (SIN BUG) ======== */
+select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+
+  /* Usar flecha tradicional del navegador */
+  appearance: auto;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+
+  /* IMPORTANTE: Eliminar cualquier background-image */
+  background-image: none;
+}
+
+select:hover {
+  border-color: var(--sapphire);
+  background: var(--bg-primary);
+}
+
 select:focus {
-    outline: none;
-    border-color: #1a73e8;
-    box-shadow: 0 0 6px rgba(26, 115, 232, 0.3);
+  outline: none;
+  border-color: var(--sapphire);
+  box-shadow: 0 0 0 4px rgba(2, 94, 196, 0.1);
+  background: var(--bg-primary);
+}
+
+/* Textarea */
+textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 /* ======== BOTÓN ======== */
 button {
-    background: #1a73e8;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition:
-        background 0.2s ease,
-        transform 0.1s ease;
+  background: linear-gradient(
+    135deg,
+    var(--sapphire) 0%,
+    var(--dark-cerulean) 100%
+  );
+  color: white;
+  border: none;
+  padding: 16px 30px;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(2, 94, 196, 0.3);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.6s,
+    height 0.6s;
+}
+
+button:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
 button:hover {
-    background: #155fc4;
-    transform: scale(1.02);
+  background: linear-gradient(
+    135deg,
+    var(--dark-cerulean) 0%,
+    var(--sapphire) 100%
+  );
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(2, 94, 196, 0.4);
 }
 
-/* ======== ENLACE VOLVER ======== */
+button:active {
+  transform: translateY(0);
+}
+
+/* ======== ENLACES ======== */
 a {
-    display: block;
-    margin-top: 20px;
-    text-align: center;
-    color: #1a73e8;
-    font-weight: 600;
-    text-decoration: none;
+  display: inline-block;
+  margin-top: 15px;
+  text-align: center;
+  color: var(--sapphire);
+  font-weight: 500;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  width: auto;
+  font-size: 0.95rem;
 }
 
 a:hover {
-    text-decoration: underline;
+  color: var(--spiro-disco-ball);
+  background: var(--background-hover);
+  border-color: var(--sapphire);
+  transform: translateY(-2px);
+  text-decoration: none;
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* Enlace "Ir a Planes" - más destacado */
+a[href="/plan"] {
+  background: linear-gradient(
+    135deg,
+    var(--sapphire) 0%,
+    var(--dark-cerulean) 100%
+  );
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(2, 94, 196, 0.3);
+}
+
+a[href="/plan"]:hover {
+  background: linear-gradient(
+    135deg,
+    var(--dark-cerulean) 0%,
+    var(--sapphire) 100%
+  );
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(2, 94, 196, 0.4);
+}
+
+/* Enlace "Volver al menu" - estilo secundario */
+a[href="/bienvenida"] {
+  background: transparent;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  margin-top: 10px;
+}
+
+a[href="/bienvenida"]:hover {
+  background: var(--background-hover);
+  border-color: var(--sapphire);
+  color: var(--sapphire);
+}
+
+/* Contenedor para enlaces al final */
+.container a:last-child {
+  margin-bottom: 5px;
+}
+
+/* ======== MENSAJES ======== */
+.alert-success {
+  background: var(--success-bg);
+  color: var(--success-text);
+  padding: 16px 20px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  border-left: 4px solid var(--success-border);
+  animation: slideIn 0.4s ease;
+}
+
+.alert-error {
+  background: var(--error-bg);
+  color: var(--error-text);
+  padding: 16px 20px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  border-left: 4px solid var(--error-border);
+  animation: slideIn 0.4s ease;
+}
+
+.alert-error ul {
+  margin: 10px 0 0 20px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======== TEXTO AYUDA ======== */
+small {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  display: block;
+  margin-top: 5px;
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 768px) {
+  body {
+    margin: 80px 15px 30px;
+    padding: 0;
+  }
+
+  .container {
+    padding: 25px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    margin-bottom: 25px;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 12px 16px;
+  }
+
+  button {
+    padding: 14px 25px;
+    font-size: 1rem;
+  }
+
+  a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    margin: 70px 10px 20px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  label {
+    font-size: 0.9rem;
+  }
+
+  input,
+  select,
+  textarea {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    border-radius: 12px;
+  }
+
+  a {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ======== ANIMACIONES ======== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  animation: fadeIn 0.5s ease forwards;
 }
